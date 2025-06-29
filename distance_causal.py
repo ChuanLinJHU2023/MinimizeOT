@@ -14,7 +14,7 @@ def calculate_causal_distance(Matrix1, Matrix2, costs, options=None):
     - Matrix1: probabilities for the first distribution (size M x I) where M = |X^| and I = |Y^|
     - Matrix2: probabilities for the second distribution (size N x J) where N = |X| and J = |Y|
     - costs: 4D list or array of costs/cost matrix between points (size M x I x N x J)
-    - options: Pulp options for solve function to speed up. For example: [('MIPGap', 0.1), ('TimeLimit', 30), ('MIPFocus', 1)]
+    - options: options for solver For example: {"msg":False, "gapRel":0.25}
 
     Returns:
     - causal_distance: the minimal cost (scalar)
@@ -83,7 +83,10 @@ def calculate_causal_distance(Matrix1, Matrix2, costs, options=None):
                     , f"causality_constrain_{m}_{i}_{n}")
 
     # Step 4: Solve Linear Programming
-    prob.solve(pulp.GUROBI())
+    if options:
+        prob.solve(pulp.GUROBI(**options))
+    else:
+        prob.solve(pulp.GUROBI())
 
     # Step5: Retrieve Results
     transport_plan = np.zeros((M, I, N, J))

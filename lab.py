@@ -1,19 +1,10 @@
-import numpy as np
-from scipy.spatial import distance
+#
+import pulp
+help(pulp.GUROBI)
 
-# First set of points
-set1 = np.array([
-    [1, 2],
-    [3, 4]
-])
-
-# Second set of points
-set2 = np.array([
-    [5, 6],
-    [7, 8]
-])
-
-# Compute all pairwise Euclidean distances between set1 and set2
-distances = distance.cdist(set1, set2, metric='minkowski', p=2)**2
-
-print(distances)
+# def greet(name, age):
+#     print(f"Hello, {name}! You are {age} years old.")
+#
+# params = {'name': 'Alice', 'age': 30}
+#
+# greet(**params)

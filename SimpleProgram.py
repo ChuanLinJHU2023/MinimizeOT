@@ -15,7 +15,8 @@ prob += x + y >= 4, "Constraint 1"
 prob += x - y <= 1, "Constraint 2"
 
 # Solve using GUROBI
-prob.solve(pulp.GUROBI())
+# prob.solve(pulp.GUROBI(msg=True, gapRel=0.3))
+prob.solve(pulp.GUROBI(msg=True))
 
 # Output the results
 print(f"Status: {pulp.LpStatus[prob.status]}")
