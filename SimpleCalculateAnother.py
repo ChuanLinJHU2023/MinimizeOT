@@ -15,5 +15,5 @@ def create_domain_adaptation_problem(n_samples=300, noise_level=0.1):
     return X_s, y_s, X_t, y_t
 
 X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samples=500, noise_level=0.1)
-options =  {"msg":True, "gapRel":0.25}
+options = {"msg": }
 calculate_causal_distance_between_datasets(X_source, y_source, X_target, y_target, class_number_n=2, order_parameter_p=2, scaling_parameter_c=2, options=options)
