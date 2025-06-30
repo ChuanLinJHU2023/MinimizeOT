@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from distance_causal import *
+from distances import *
 from utils import *
 
 scaling_parameter_c = 128

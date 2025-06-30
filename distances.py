@@ -129,14 +129,44 @@ def calculate_causal_distance_between_images(image1, image2, scaling_parameter_c
 
 
 def calculate_causal_distance_between_datasets(X1, y1, X2, y2, class_number_n=2, order_parameter_p=2, scaling_parameter_c=2, options=None):
+    def reduce_redundant_transport_matrix(redundant_transport_matrix, y1, y2):
+        """
+        Extracts a reduced transportation matrix from a higher-dimensional redundant matrix
+        based on the provided index mappings y1 and y2.
+        The (i,j)-th element of return transport plan is the (y1[i],i,y2[j],j)-th element of the redundant transport plan
+
+        Parameters:
+        - redundant_transport_matrix: numpy.ndarray
+            A 4D array with shape (M, I, N, J), representing the redundant transport data.
+        - y1: numpy.ndarray
+            1D array of shape (I,), containing index mappings for the second dimension.
+        - y2: numpy.ndarray
+            1D array of shape (J,), containing index mappings for the fourth dimension.
+
+        Returns:
+        - new_transport_matrix: numpy.ndarray
+            A 2D array of shape (I, J) representing the reduced transport matrix.
+        """
+        redundant_transport_matrix = np.array(redundant_transport_matrix)
+        M, I, N, J = redundant_transport_matrix.shape
+        assert y1.shape == (I,)
+        assert y2.shape == (J,)
+        i_indices = np.arange(I)
+        j_indices = np.arange(J)
+        new_transport_matrix = redundant_transport_matrix[
+            y1[:, np.newaxis], i_indices[:, np.newaxis], y2[np.newaxis, :], j_indices[np.newaxis, :]]
+        assert new_transport_matrix.shape == (I, J)
+        return new_transport_matrix
+
     assert np.all(y1<class_number_n) and np.all(y2<class_number_n)
     M = class_number_n
     I = X1.shape[0]
     N = class_number_n
     J = X2.shape[0]
-    Matrix1 = np.row_stack([y1 == class_i for class_i in range(class_number_n)])
-    Matrix2 = np.row_stack([y2 == class_i for class_i in range(class_number_n)])
-    costs_X = distance.cdist(X1, X2, metric='minkowski', p=order_parameter_p)**order_parameter_p
-    costs_Y = (1 - np.eye(class_number_n)) * scaling_parameter_c ** order_parameter_p
-    costs = costs_X.reshape(1, I, 1, J) + costs_Y.reshape(M, 1, N, 1)
-    return calculate_causal_distance(Matrix1, Matrix2, costs, options=options)
+    RedundantMatrix1 = np.row_stack([y1 == class_i for class_i in range(class_number_n)])
+    RedundantMatrix2 = np.row_stack([y2 == class_i for class_i in range(class_number_n)])
+    redundant_costs_X = distance.cdist(X1, X2, metric='minkowski', p=order_parameter_p)**order_parameter_p
+    redundant_costs_Y = (1 - np.eye(class_number_n)) * scaling_parameter_c ** order_parameter_p
+    redundant_costs = redundant_costs_X.reshape(1, I, 1, J) + redundant_costs_Y.reshape(M, 1, N, 1)
+    causal_distance, redundant_transport_plan = calculate_causal_distance(RedundantMatrix1, RedundantMatrix2, redundant_costs, options=options)
+    return causal_distance, reduce_redundant_transport_matrix(redundant_transport_plan, y1, y2)
