@@ -162,6 +162,8 @@ def calculate_causal_distance_between_datasets(X1, y1, X2, y2, class_number_n=2,
     I = X1.shape[0]
     N = class_number_n
     J = X2.shape[0]
+    assert y1.shape == (I,)
+    assert y2.shape == (J,)
     redundant_Matrix1 = np.row_stack([y1 == class_i for class_i in range(class_number_n)])
     redundant_Matrix2 = np.row_stack([y2 == class_i for class_i in range(class_number_n)])
     costs_X = distance.cdist(X1, X2, metric='minkowski', p=order_parameter_p)**order_parameter_p

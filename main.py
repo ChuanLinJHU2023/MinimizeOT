@@ -1,3 +1,5 @@
+import numpy as np
+
 from models import *
 from problems import *
 from distances import *
@@ -30,21 +32,22 @@ costs_X_tensor = torch.tensor(
 
 
 pred_y_target = None
-transport_plan = None
 causal_distance = None
+transport_plan = None
 transport_plan_tensor = None
 approx_costs_Y_tensor = None
 approx_costs_tensor = None
 approx_causal_distance = None
+
 for epoch in range(num_epochs):
     model.train()
     optimizer.zero_grad()
     new_pred_y_target_tensor = model(X_target_tensor)
-    new_pred_y_target = new_pred_y_target_tensor.detach().numpy()
+    new_pred_y_target = new_pred_y_target_tensor.detach().numpy().reshape(-1)
     if pred_y_target is None or not np.array_equal(new_pred_y_target, pred_y_target):
         pred_y_target = new_pred_y_target
         causal_distance, transport_plan = calculate_causal_distance_between_datasets(
-            X_source, y_source, X_target, pred_y_target, hyper_parameter_n_classes,
+            X_source, y_source, X_target, (pred_y_target>=0.5).astype(np.int64), hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
         )
         transport_plan_tensor = torch.tensor(transport_plan)
