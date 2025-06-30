@@ -14,7 +14,7 @@ X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samp
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
 hyper_parameter_c = 2
-learning_rate = 0.1
+learning_rate = 0.01
 num_epochs = 5000
 num_epochs_per_print = 1000
 speed_up_options = {"msg":False}
@@ -65,6 +65,7 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()
         approx_causal_distance.backward()
     optimizer.step()
+
 
 
 
