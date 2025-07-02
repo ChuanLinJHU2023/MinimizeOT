@@ -12,6 +12,7 @@ n_samples = 100
 X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samples=n_samples, noise_level=0.1)
 
 # Step 2: Set hyper-parameter
+causality_direction = "S2T"
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
 hyper_parameter_c = 2
@@ -22,10 +23,13 @@ speed_up_options = {"msg":False}
 list_of_num_hidden_units = [16]
 model = SimpleClassifier(list_of_num_hidden_units)
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+X1, y1, X2, y2 = (X_source, y_source, X_target, y_target) if causality_direction=="S2T" else (X_target, y_target, X_source, y_source)
 ideal_causal_distance, _ = calculate_causal_distance_between_datasets(
-            X_source, y_source, X_target, y_target, hyper_parameter_n_classes,
+            X1, y1, X2, y2, hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
         )
+
+
 
 
 # Step 3: Train Model
@@ -62,8 +66,10 @@ for epoch in range(1, num_epochs+1):
         pred_y_target = new_pred_y_target
         pred_y_target_tensor = new_pred_y_target_tensor
         binary_pred_y_target = new_binary_pred_y_target
+        X1, y1, X2, y2 = (X_source, y_source, X_target, binary_pred_y_target) if causality_direction == "S2T" else (
+        X_target, binary_pred_y_target, X_source, y_source)
         causal_distance, transport_plan = calculate_causal_distance_between_datasets(
-            X_source, y_source, X_target, binary_pred_y_target, hyper_parameter_n_classes,
+            X1, y1, X2, y2, hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
         )
         transport_plan_tensor = torch.tensor(transport_plan)
@@ -84,7 +90,17 @@ for epoch in range(1, num_epochs+1):
 
 
 # Step 4: Visualize the Classifier Result
+print(f"Causality Direction: {causality_direction}")
+print(f"Number of Classes (n_classes): {hyper_parameter_n_classes}")
+print(f"Hyper Parameter p: {hyper_parameter_p}")
+print(f"Hyper Parameter c: {hyper_parameter_c}")
+print(f"Learning Rate: {learning_rate}")
+print(f"Number of Epochs: {num_epochs}")
+print(f"Epochs per Print: {num_epochs_per_print}")
+print(f"Speed Up Options: {speed_up_options}")
+print(f"List of Hidden Units: {list_of_num_hidden_units}")
 visualize_domains([X_source, X_target], [y_source, y_target],
                   [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%',
                    f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%"],
                   x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
+
