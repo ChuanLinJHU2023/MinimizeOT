@@ -23,7 +23,7 @@ list_of_num_hidden_units = [16]
 model = SimpleClassifier(list_of_num_hidden_units)
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 ideal_causal_distance, _ = calculate_causal_distance_between_datasets(
-            X_source, y_source, X_target, y_target, hyper_parameter_n_classes,
+            X_target, y_target, X_source, y_source, hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
         )
 
@@ -63,7 +63,7 @@ for epoch in range(1, num_epochs+1):
         pred_y_target_tensor = new_pred_y_target_tensor
         binary_pred_y_target = new_binary_pred_y_target
         causal_distance, transport_plan = calculate_causal_distance_between_datasets(
-            X_source, y_source, X_target, binary_pred_y_target, hyper_parameter_n_classes,
+            X_target, binary_pred_y_target, X_source, y_source, hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
         )
         transport_plan_tensor = torch.tensor(transport_plan)
@@ -85,6 +85,6 @@ for epoch in range(1, num_epochs+1):
 
 # Step 4: Visualize the Classifier Result
 visualize_domains([X_source, X_target], [y_source, y_target],
-                  [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%',
-                   f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%"],
+                  [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, direction=T2S',
+                   f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, direction=T2S"],
                   x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
