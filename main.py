@@ -4,6 +4,7 @@ from models import *
 from problems import *
 from distances import *
 from scipy.spatial import distance
+from visualizations import *
 
 
 # Step 1: Get data
@@ -15,8 +16,8 @@ hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
 hyper_parameter_c = 2
 learning_rate = 0.001
-num_epochs = 5000
-num_epochs_per_print = 20
+num_epochs = 1000
+num_epochs_per_print = 50
 speed_up_options = {"msg":False}
 list_of_num_hidden_units = [16]
 model = SimpleClassifier(list_of_num_hidden_units)
@@ -81,3 +82,8 @@ for epoch in range(num_epochs):
             f'Ideal Loss: {ideal_causal_distance:.4f}'
         )
 
+
+# Step 4: Visualize the Classifier Result
+visualize_domains([X_source, X_target], [y_source, y_target],
+                  [f'Source Domain c={hyper_parameter_c}', f"Target Domain c={hyper_parameter_c}"],
+                  x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)

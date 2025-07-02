@@ -27,7 +27,7 @@ def visualize_domains(datasets, labels, titles, x_limit=None, y_limit=None, with
         grid_points = np.c_[xx.ravel(), yy.ravel()]
         grid_tensor = torch.tensor(grid_points, dtype=torch.float32)
         with torch.no_grad():
-            preds = model(grid_tensor).numpy()
+            preds = with_model(grid_tensor).numpy()
         preds = preds.reshape(xx.shape)
 
     plt.figure(figsize=(6 * num_datasets if not single_plot else 8, 5))
