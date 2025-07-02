@@ -8,15 +8,15 @@ from visualizations import *
 
 
 # Step 1: Get data
-n_samples = 100
+n_samples = 50
 X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samples=n_samples, noise_level=0.1)
 
 # Step 2: Set hyper-parameter
 causality_direction = "S2T"
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
-hyper_parameter_c = 20
-learning_rate = 0.0001
+hyper_parameter_c = 2
+learning_rate = 0.000001
 num_epochs = 10000
 num_epochs_per_print = 1000
 speed_up_options = {"msg":False}
@@ -90,6 +90,7 @@ for epoch in range(1, num_epochs+1):
 
 
 # Step 4: Visualize the Classifier Result
+print(f"N samples: {n_samples}")
 print(f"Causality Direction: {causality_direction}")
 print(f"Hyper Parameter p: {hyper_parameter_p}")
 print(f"Hyper Parameter c: {hyper_parameter_c}")
