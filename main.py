@@ -15,8 +15,8 @@ X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samp
 causality_direction = "S2T"
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
-hyper_parameter_c = 2
-learning_rate = 0.0005
+hyper_parameter_c = 20
+learning_rate = 0.0001
 num_epochs = 10000
 num_epochs_per_print = 1000
 speed_up_options = {"msg":False}
@@ -91,16 +91,13 @@ for epoch in range(1, num_epochs+1):
 
 # Step 4: Visualize the Classifier Result
 print(f"Causality Direction: {causality_direction}")
-print(f"Number of Classes (n_classes): {hyper_parameter_n_classes}")
 print(f"Hyper Parameter p: {hyper_parameter_p}")
 print(f"Hyper Parameter c: {hyper_parameter_c}")
 print(f"Learning Rate: {learning_rate}")
 print(f"Number of Epochs: {num_epochs}")
-print(f"Epochs per Print: {num_epochs_per_print}")
-print(f"Speed Up Options: {speed_up_options}")
 print(f"List of Hidden Units: {list_of_num_hidden_units}")
 visualize_domains([X_source, X_target], [y_source, y_target],
-                  [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%',
-                   f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%"],
+                  [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, causality={causality_direction}',
+                   f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, causality={causality_direction}"],
                   x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
 
