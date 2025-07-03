@@ -8,17 +8,17 @@ from visualizations import *
 
 
 # Step 1: Get data
-n_samples = 50
+n_samples = 100
 X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samples=n_samples, noise_level=0.1)
 
 # Step 2: Set hyper-parameter
 causality_direction = "S2T"
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
-hyper_parameter_c = 2
-learning_rate = 0.000001
-num_epochs = 10000
-num_epochs_per_print = 1000
+hyper_parameter_c = 0.2
+learning_rate = 0.0001
+num_epochs = 6000
+num_epochs_per_print = 600
 speed_up_options = {"msg":False}
 list_of_num_hidden_units = [16]
 model = SimpleClassifier(list_of_num_hidden_units)
