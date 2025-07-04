@@ -5,12 +5,13 @@ from utils import *
 
 def main(i, j):
     imgs = list()
-    scaling_parameter_c = 128
-    options = {"msg": False}
+    scaling_parameter_c = 32
+    options = {"msg": True}
 
     # Load and process images
     for index in range(5):
         img = plt.imread(f'../image_coffees/{index}_32.png')
+        img = downsample_image(img, 2)
         imgs.append(img)
 
     print(f"IMAGE SHAPE: {imgs[0].shape}")
