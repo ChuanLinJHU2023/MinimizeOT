@@ -1,6 +1,4 @@
 import numpy as np
-
-from main import n_samples
 from models import *
 from problems import *
 from distances import *
@@ -12,6 +10,10 @@ from visualizations import *
 n_samples=100
 X_source, y_source, X_target, y_target = create_domain_adaptation_problem_with_label_shift(n_samples=n_samples,
                                                                 noise_level=0.1, source_ratio=0.7, target_ratio=0.3)
+print(f"N samples: {n_samples}")
+print(f"N positive samples in source domain: {len(y_source==1)}")
+print(f"N positive samples in target domain: {len(y_target==1)}")
+
 
 
 
@@ -32,6 +34,7 @@ ideal_causal_distance, _ = calculate_causal_distance_between_datasets(
             X1, y1, X2, y2, hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
         )
+
 
 
 
@@ -93,10 +96,13 @@ for epoch in range(1, num_epochs+1):
         )
 
 
+
+
+
 # Step 4: Visualize the Classifier Result
 print(f"N samples: {n_samples}")
 print(f"N positive samples in source domain: {len(y_source==1)}")
-print(f"N positive samples in target domain: {len(y_source==0)}")
+print(f"N positive samples in target domain: {len(y_target==1)}")
 print(f"Causality Direction: {causality_direction}")
 print(f"Hyper Parameter p: {hyper_parameter_p}")
 print(f"Hyper Parameter c: {hyper_parameter_c}")
@@ -107,4 +113,8 @@ visualize_domains([X_source, X_target], [y_source, y_target],
                   [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, causality={causality_direction}',
                    f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, causality={causality_direction}"],
                   x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
+
+
+
+
 
