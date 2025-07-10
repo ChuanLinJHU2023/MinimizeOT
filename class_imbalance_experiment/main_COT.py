@@ -11,8 +11,9 @@ n_samples=100
 X_source, y_source, X_target, y_target = create_domain_adaptation_problem_with_label_shift(n_samples=n_samples,
                                                                 noise_level=0.1, source_ratio=0.7, target_ratio=0.3)
 print(f"N samples: {n_samples}")
-print(f"N positive samples in source domain: {len(y_source==1)}")
-print(f"N positive samples in target domain: {len(y_target==1)}")
+print(f"N positive samples in source domain: {len(X_source[y_source==1])}")
+print(f"N positive samples in target domain: {len(X_target[y_target==1])}")
+
 
 
 
@@ -21,10 +22,10 @@ print(f"N positive samples in target domain: {len(y_target==1)}")
 causality_direction = "S2T"
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
-hyper_parameter_c = 0.2
-learning_rate = 0.0001
-num_epochs = 6000
-num_epochs_per_print = 600
+hyper_parameter_c = 2
+learning_rate = 0.00001
+num_epochs = 200000
+num_epochs_per_print = 20000
 speed_up_options = {"msg":False}
 list_of_num_hidden_units = [16]
 model = SimpleClassifier(list_of_num_hidden_units)
@@ -46,7 +47,6 @@ X_target_tensor = torch.tensor(X_target, dtype=torch.float32)
 y_target_tensor = torch.tensor(y_target.reshape(-1, 1), dtype=torch.float32)
 costs_X_tensor = torch.tensor(
     distance.cdist(X_source, X_target, metric='minkowski', p=hyper_parameter_p) ** hyper_parameter_p)
-
 
 prediction_change_happens_in_n_epochs = 0
 pred_y_target = None
@@ -96,13 +96,10 @@ for epoch in range(1, num_epochs+1):
         )
 
 
-
-
-
 # Step 4: Visualize the Classifier Result
 print(f"N samples: {n_samples}")
-print(f"N positive samples in source domain: {len(y_source==1)}")
-print(f"N positive samples in target domain: {len(y_target==1)}")
+print(f"N positive samples in source domain: {len(X_source[y_source==1])}")
+print(f"N positive samples in target domain: {len(X_target[y_target==1])}")
 print(f"Causality Direction: {causality_direction}")
 print(f"Hyper Parameter p: {hyper_parameter_p}")
 print(f"Hyper Parameter c: {hyper_parameter_c}")
@@ -113,8 +110,6 @@ visualize_domains([X_source, X_target], [y_source, y_target],
                   [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, causality={causality_direction}',
                    f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%, causality={causality_direction}"],
                   x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
-
-
 
 
 
