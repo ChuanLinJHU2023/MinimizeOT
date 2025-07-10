@@ -1,6 +1,7 @@
 import pulp
 import numpy as np
 from scipy.spatial import distance
+import ot
 
 
 def calculate_causal_distance(Matrix1, Matrix2, costs, options=None):
@@ -171,3 +172,33 @@ def calculate_causal_distance_between_datasets(X1, y1, X2, y2, class_number_n=2,
     redundant_costs = costs_X.reshape(1, I, 1, J) + costs_Y.reshape(M, 1, N, 1)
     causal_distance, redundant_transport_plan = calculate_causal_distance(redundant_Matrix1, redundant_Matrix2, redundant_costs, options=options)
     return causal_distance, reduce_redundant_transport_matrix(redundant_transport_plan, y1, y2)
+
+
+def calculate_wasserstein_distance(vector1, vector2, costs):
+    marginal_prob1 = vector1 / vector1.sum()
+    marginal_prob2 = vector2 / vector2.sum()
+    ot_distance = ot.emd2(marginal_prob1, marginal_prob2, costs)
+    plan = None
+    return ot_distance, plan
+
+
+def calculate_wasserstein_distance_between_images(image1, image2, scaling_parameter_c=128):
+    def get_cost_from_ij(i, j, H, W, C, scaling_parameter_c=128):
+        def get_hwc_from_i(i, H, W, C):
+            assert i < H * W * C
+            c = i % C
+            i //= C
+            w = i % W
+            h = i // W
+            return h, w, c
+        h1, w1, c1 = get_hwc_from_i(i, H, W, C)
+        h2, w2, c2 = get_hwc_from_i(j, H, W, C)
+        res = np.abs(h1 - h2) + np.abs(w1 - w2) + (c1 != c2) * scaling_parameter_c
+        return res
+    assert image1.shape == image2.shape
+    (H, W, C) = image1.shape
+    vector1 = image1.flatten()
+    vector2 = image2.flatten()
+    costs = np.array([get_cost_from_ij(i, j, H, W, C, scaling_parameter_c) for i in range(len(vector1)) for j in range(len(vector2))])
+    costs = costs.reshape((len(vector1), len(vector2)))
+    return calculate_wasserstein_distance(vector1, vector2, costs)
