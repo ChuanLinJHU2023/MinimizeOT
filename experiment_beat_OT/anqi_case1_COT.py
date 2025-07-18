@@ -4,7 +4,7 @@ from problems import *
 from distances import *
 from scipy.spatial import distance
 from visualizations import *
-
+from evaluate import *
 
 
 # Step 1: Get data
@@ -63,7 +63,8 @@ approx_costs_tensor = None
 approx_causal_distance = None
 # Tip: We calculate causal_distance first with true costs and then calculate approx_causal_distance with approximate costs
 # causal_distance is our real target to minimize while approximate_causal_distance can give us gradient
-# the difference of causal_distance and approximate causal_distance lies only in costs. Their plans are the same, which is based on true costs
+# the difference of causal_distance and approximate causal_distance lies only in costs.
+# Their plans are the same, which is based on true costs
 for epoch in range(1, num_epochs+1):
     model.train()
     new_pred_y_target_tensor = model(X_target_tensor)
@@ -107,10 +108,12 @@ print(f"Hyper Parameter c: {hyper_parameter_c}")
 print(f"Learning Rate: {learning_rate}")
 print(f"Number of Epochs: {num_epochs}")
 print(f"List of Hidden Units: {list_of_num_hidden_units}")
+evaluate_and_print_for_binary_classification(X_target_tensor, y_target_tensor, model)
 visualize_domains([X_source, X_target], [y_source, y_target],
                   [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%',
                    f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%"],
                   x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
+
 
 
 
