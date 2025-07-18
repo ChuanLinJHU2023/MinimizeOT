@@ -20,8 +20,14 @@ X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samp
                                                                           neg_y_interval_target=(-np.inf, np.inf),
                                                                           )
 
-# Step 2: Visualize data
+
+
+
+
+# Step 2: Visualize
 visualize_domains([X_source, X_target], [y_source, y_target],
-                  ["Source Domain", "Target Domain"],
+                  ['Source Domain', "Target Domain"],
                   x_limit=(-2.5, 3.5), y_limit=(-3, 3))
+
+
 
