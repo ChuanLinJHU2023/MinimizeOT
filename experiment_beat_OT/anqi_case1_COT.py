@@ -27,7 +27,7 @@ hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
 hyper_parameter_c = 0.2
 learning_rate = 0.000001
-num_epochs = 480000
+num_epochs = 600000
 num_epochs_per_print = num_epochs/10
 speed_up_options = {"msg":False}
 list_of_num_hidden_units = [16]
@@ -74,6 +74,7 @@ for epoch in range(1, num_epochs+1):
         pred_y_target = new_pred_y_target
         pred_y_target_tensor = new_pred_y_target_tensor
         binary_pred_y_target = new_binary_pred_y_target
+        binary_pred_y_target_tensor = torch.tensor(binary_pred_y_target, dtype=torch.float32)
         causal_distance, transport_plan = calculate_causal_distance_between_datasets(
             X_source, y_source, X_target, binary_pred_y_target, hyper_parameter_n_classes,
             order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
@@ -81,15 +82,19 @@ for epoch in range(1, num_epochs+1):
         transport_plan_tensor = torch.tensor(transport_plan)
         approx_costs_Y_tensor = \
             torch.abs(y_source_tensor.reshape(-1,1) - pred_y_target_tensor.reshape(1,-1)) * hyper_parameter_c ** hyper_parameter_p
+        costs_Y_tensor = \
+            torch.abs(y_source_tensor.reshape(-1,1) - binary_pred_y_target_tensor.reshape(1,-1)) * hyper_parameter_c ** hyper_parameter_p
         approx_costs_tensor = costs_X_tensor + approx_costs_Y_tensor
         approx_causal_distance = torch.sum(approx_costs_tensor * transport_plan_tensor)
         optimizer.zero_grad()
         approx_causal_distance.backward()
     optimizer.step()
     if epoch % num_epochs_per_print == 0:
+        X_part = torch.sum(costs_X_tensor * transport_plan_tensor).item()
+        Y_part = torch.sum(costs_Y_tensor * transport_plan_tensor).item()
         print(
             f'Epoch [{epoch}/{num_epochs}]({prediction_change_happens_in_n_epochs}), '
-            f'True Loss: {causal_distance:.4f}, '
+            f'True Loss: {causal_distance:.4f} (X: {X_part:.4f}, Y:{Y_part:.4f}), '
             f'Approximate Loss: {approx_causal_distance.item():.4f}, '
             f'Ideal Loss: {ideal_causal_distance:.4f}'
         )
