@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import torch
 import numpy as np
 
-def visualize_domains(datasets, labels, titles, x_limit=None, y_limit=None, with_model=None, single_plot=False):
+def visualize_domains(datasets, labels, titles, x_limit=None, y_limit=None, with_model=None, single_plot=False, save_title=None):
     """
     Plots multiple domain feature distributions side by side or on a single plot.
     When with_model is provided, predictions are visualized as a smoothed gradient background,
@@ -108,7 +108,11 @@ def visualize_domains(datasets, labels, titles, x_limit=None, y_limit=None, with
                 plt.legend()
 
     plt.tight_layout()
-    plt.show()
+    if save_title is not None:
+        plt.savefig(save_title)
+        plt.close()
+    else:
+        plt.show()
 
 
 
