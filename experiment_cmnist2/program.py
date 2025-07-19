@@ -1,7 +1,4 @@
-# program.py
 from distances import *
-import matplotlib.pyplot as plt
-import argparse
 from utils import *
 
 
