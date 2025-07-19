@@ -4,7 +4,7 @@ from problems import *
 from distances import *
 from scipy.spatial import distance
 from visualizations import *
-
+from evaluate import *
 
 # Step 1: Get data
 n_samples=100
@@ -60,9 +60,12 @@ for epoch in range(num_epochs):
 
 
 # Step 4: Visualize
+print_hyper_parameters(n_samples, None, None, learning_rate, num_epochs, list_of_num_hidden_units)
+evaluate_and_print_for_binary_classification(X_target, y_target, model)
 visualize_domains([X_source, X_source_adapted, X_target], [y_source, y_source, y_target],
                   ['Source Domain', 'Source Domain Adapted', "Target Domain"],
                   x_limit=(-2.5, 3.5), y_limit=(-3, 3), with_model=model)
+
 
 
 

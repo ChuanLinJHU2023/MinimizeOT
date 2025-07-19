@@ -22,6 +22,7 @@ X_source, y_source, X_target, y_target = create_domain_adaptation_problem(n_samp
                                                                           )
 
 
+
 # Step 2: Set hyper-parameter
 hyper_parameter_n_classes = 2
 hyper_parameter_p = 2
@@ -35,13 +36,6 @@ model = SimpleClassifier(list_of_num_hidden_units)
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 
-# Additional Step:
-ideal_causal_distance, _ = calculate_causal_distance_between_datasets(
-            X_source, y_source, X_target, y_target, hyper_parameter_n_classes,
-            order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
-        )
-
-
 # Step 3: Train Model
 X_source_tensor = torch.tensor(X_source, dtype=torch.float32)
 y_source_tensor = torch.tensor(y_source.reshape(-1, 1), dtype=torch.float32)
@@ -49,6 +43,11 @@ X_target_tensor = torch.tensor(X_target, dtype=torch.float32)
 y_target_tensor = torch.tensor(y_target.reshape(-1, 1), dtype=torch.float32)
 costs_X_tensor = torch.tensor(
     distance.cdist(X_source, X_target, metric='minkowski', p=hyper_parameter_p) ** hyper_parameter_p)
+ideal_causal_distance, _ = calculate_causal_distance_between_datasets(
+            X_source, y_source, X_target, y_target, hyper_parameter_n_classes,
+            order_parameter_p=hyper_parameter_p, scaling_parameter_c=hyper_parameter_c, options=speed_up_options
+        )
+
 
 prediction_change_happens_in_n_epochs = 0
 pred_y_target = None
@@ -101,18 +100,14 @@ for epoch in range(1, num_epochs+1):
         )
 
 
+
 # Step 4: Visualize the Classifier Result
-print(f"N samples: {n_samples}")
-print(f"Hyper Parameter p: {hyper_parameter_p}")
-print(f"Hyper Parameter c: {hyper_parameter_c}")
-print(f"Learning Rate: {learning_rate}")
-print(f"Number of Epochs: {num_epochs}")
-print(f"List of Hidden Units: {list_of_num_hidden_units}")
-evaluate_and_print_for_binary_classification(X_target_tensor, y_target_tensor, model)
+print_hyper_parameters(n_samples, hyper_parameter_p, hyper_parameter_c, learning_rate, num_epochs, list_of_num_hidden_units)
+evaluate_and_print_for_binary_classification(X_target, y_target, model)
 visualize_domains([X_source, X_target], [y_source, y_target],
                   [f'Source Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%',
                    f"Target Domain c={hyper_parameter_c} overflow={ideal_causal_distance/causal_distance*100 - 100:.2f}%"],
-                  x_limit=(-3, 3), y_limit=(-3, 3), with_model=model)
+                  x_limit=(-2.5, 3.5), y_limit=(-3, 3), with_model=model)
 
 
 
