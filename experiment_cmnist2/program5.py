@@ -1,9 +1,7 @@
 from distances import *
 from utils import *
-
-
-img1="img1.png"
-img2="img2.png"
+img1="Three1.png"
+img2="Four3.png"
 downsample_factor = 2
 scaling_parameter = 32
 img1 = plt.imread(img1)
