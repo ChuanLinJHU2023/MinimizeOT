@@ -13,6 +13,7 @@ programs = [
     "program6.py",
     "program7.py",
     "program8.py",
+    "program9.py",
 ]
 
 # Ensure the output logs directory exists
