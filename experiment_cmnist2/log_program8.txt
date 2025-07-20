@@ -1,0 +1,20 @@
+Set parameter Username
+Set parameter LicenseID to value 2671963
+Academic license - for non-commercial use only - expires 2026-05-28
+Gurobi Optimizer version 12.0.2 build v12.0.2rc0 (mac64[arm] - Darwin 24.5.0 24F74)
+
+CPU model: Apple M3
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 155232 rows, 614656 columns and 3687936 nonzeros
+Model fingerprint: 0xc178b939
+Coefficient statistics:
+  Matrix range     [3e-02, 1e+00]
+  Objective range  [1e+00, 6e+01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [2e-04, 2e-03]
+Presolve time: 0.95s
+
+Solved in 0 iterations and 0.95 seconds (1.90 work units)
+Infeasible model
+Gurobi status= 3
