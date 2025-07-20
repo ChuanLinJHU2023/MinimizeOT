@@ -1,6 +1,8 @@
 import subprocess
 import os
 
+log_files_directory = "output_logs"
+
 # List of program filenames to execute
 programs = [
     "program1.py",
@@ -13,10 +15,13 @@ programs = [
     "program8.py",
 ]
 
+# Ensure the output logs directory exists
+os.makedirs(log_files_directory, exist_ok=True)
+
 for prog in programs:
     # Derive log filename
     base_name = os.path.splitext(prog)[0]
-    log_filename = f"log_{base_name}.txt"
+    log_filename = os.path.join(log_files_directory, f"log_{base_name}.txt")
 
     with open(log_filename, 'w') as log_file:
         try:

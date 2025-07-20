@@ -26,16 +26,6 @@ def generate_colored_digit(number, bg_color, digit_color, save_title=None):
     # Apply digit color to the digit pixels
     for c in range(3):
         colored_img[:, :, c][mask] = digit_color[c]
-
-    # Save or show the image based on save_title
-    if save_title and isinstance(save_title, str):
-        # Save the image to a file
-        plt.imsave(save_title+".png", colored_img)
-    else:
-        # Display the image
-        plt.imshow(colored_img)
-        plt.axis('off')
-        plt.show()
     return colored_img
 
 
@@ -46,6 +36,11 @@ def downsample_image(image, factor):
     downsampled_image = cv2.resize(image, new_size, interpolation=cv2.INTER_AREA)
     return np.array(downsampled_image)
 
+def get_rid_of_alpha_channel(img):
+    assert img.shape[-1] == 4
+    new_img = img[:, :,  :3]
+    assert new_img.shape[-1] == 3
+    return new_img
 
 def print_format_string(text, total_length):
     text_length = len(text)

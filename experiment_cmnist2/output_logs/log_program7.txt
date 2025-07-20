@@ -1,0 +1,74 @@
+Set parameter Username
+Set parameter LicenseID to value 2671963
+Academic license - for non-commercial use only - expires 2026-05-28
+Gurobi Optimizer version 12.0.2 build v12.0.2rc0 (mac64[arm] - Darwin 24.5.0 24F74)
+
+CPU model: Apple M3
+Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
+
+Optimize a model with 116424 rows, 345744 columns and 1728720 nonzeros
+Model fingerprint: 0xe8f321cc
+Coefficient statistics:
+  Matrix range     [5e-02, 1e+00]
+  Objective range  [1e+00, 6e+01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [2e-04, 2e-03]
+Presolve removed 38809 rows and 0 columns
+Presolve time: 0.53s
+Presolved: 77615 rows, 345744 columns, 1246848 nonzeros
+
+Concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Ordering time: 0.02s
+
+Barrier statistics:
+ AA' NZ     : 6.197e+05
+ Factor NZ  : 1.184e+06 (roughly 180 MB of memory)
+ Factor Ops : 2.533e+08 (less than 1 second per iteration)
+ Threads    : 6
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   5.90877989e+05 -6.59095830e-01  2.96e+01 0.00e+00  1.35e+00     1s
+   1   7.40338722e+04 -1.97222285e+01  4.37e+00 2.13e-14  1.94e-01     1s
+   2   3.32737258e+03 -1.94352566e+01  1.95e-01 2.13e-14  8.72e-03     1s
+   3   3.13911573e+01 -1.84747193e+01  3.52e-04 2.84e-14  7.90e-05     1s
+   4   2.09840883e+01  5.12023732e+00  1.04e-05 2.13e-14  2.29e-05     1s
+   5   1.72854031e+01  8.62690756e+00  9.34e-07 1.42e-14  1.25e-05     1s
+   6   1.48240284e+01  9.39038741e+00  2.91e-07 1.42e-14  7.86e-06     1s
+   7   1.30056045e+01  9.46750320e+00  1.09e-07 1.42e-14  5.12e-06     1s
+   8   1.13723987e+01  9.93146785e+00  1.37e-08 2.13e-14  2.08e-06     1s
+   9   1.09996836e+01  1.01102786e+01  6.69e-09 2.84e-14  1.29e-06     1s
+  10   1.06125555e+01  1.02682474e+01  1.18e-09 2.84e-14  4.98e-07     1s
+  11   1.04970280e+01  1.03896990e+01  2.35e-10 2.13e-14  1.55e-07     1s
+  12   1.04674038e+01  1.04199735e+01  6.68e-11 2.84e-14  6.86e-08     1s
+  13   1.04620488e+01  1.04402788e+01  4.17e-11 1.42e-14  3.15e-08     1s
+  14   1.04566816e+01  1.04451903e+01  1.74e-11 1.42e-14  1.66e-08     1s
+  15   1.04542221e+01  1.04508797e+01  6.68e-12 1.78e-14  4.83e-09     1s
+  16   1.04530210e+01  1.04512090e+01  1.22e-12 1.42e-14  2.62e-09     1s
+  17   1.04526914e+01  1.04526597e+01  1.11e-14 2.13e-14  4.59e-11     1s
+  18   1.04526698e+01  1.04526644e+01  2.79e-12 2.13e-14  7.87e-12     1s
+  19   1.04526644e+01  1.04526644e+01  4.91e-15 2.13e-14  7.87e-15     2s
+
+Barrier solved model in 19 iterations and 1.54 seconds (2.60 work units)
+Optimal objective 1.04526644e+01
+
+Crossover log...
+
+   74205 DPushes remaining with DInf 0.0000000e+00                 2s
+       0 DPushes remaining with DInf 0.0000000e+00                 2s
+
+    1620 PPushes remaining with PInf 1.1447712e-03                 2s
+       0 PPushes remaining with PInf 0.0000000e+00                 2s
+
+  Push phase complete: Pinf 0.0000000e+00, Dinf 9.2264359e-11      2s
+
+
+Solved with barrier
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+   75828    1.0452664e+01   0.000000e+00   0.000000e+00      2s
+
+Solved in 75828 iterations and 2.04 seconds (3.65 work units)
+Optimal objective  1.045266436e+01
+Gurobi status= 2
