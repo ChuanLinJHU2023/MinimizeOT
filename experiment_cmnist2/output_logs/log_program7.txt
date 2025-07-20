@@ -6,69 +6,72 @@ Gurobi Optimizer version 12.0.2 build v12.0.2rc0 (mac64[arm] - Darwin 24.5.0 24F
 CPU model: Apple M3
 Thread count: 8 physical cores, 8 logical processors, using up to 8 threads
 
-Optimize a model with 116424 rows, 345744 columns and 1728720 nonzeros
-Model fingerprint: 0xe8f321cc
+Optimize a model with 78008 rows, 345744 columns and 1152480 nonzeros
+Model fingerprint: 0xdb18258e
 Coefficient statistics:
-  Matrix range     [5e-02, 1e+00]
-  Objective range  [1e+00, 6e+01]
+  Matrix range     [2e-04, 1e+00]
+  Objective range  [1e+00, 5e+02]
   Bounds range     [0e+00, 0e+00]
-  RHS range        [2e-04, 2e-03]
-Presolve removed 38809 rows and 0 columns
-Presolve time: 0.53s
-Presolved: 77615 rows, 345744 columns, 1246848 nonzeros
+  RHS range        [2e-04, 3e-03]
+Presolve removed 393 rows and 0 columns
+Presolve time: 0.52s
+Presolved: 77615 rows, 345744 columns, 1149540 nonzeros
 
 Concurrent LP optimizer: primal simplex, dual simplex, and barrier
 Showing barrier log only...
 
-Ordering time: 0.02s
+Ordering time: 0.24s
 
 Barrier statistics:
- AA' NZ     : 6.197e+05
- Factor NZ  : 1.184e+06 (roughly 180 MB of memory)
- Factor Ops : 2.533e+08 (less than 1 second per iteration)
+ AA' NZ     : 7.651e+05
+ Factor NZ  : 1.143e+06 (roughly 180 MB of memory)
+ Factor Ops : 3.483e+08 (less than 1 second per iteration)
  Threads    : 6
 
                   Objective                Residual
 Iter       Primal          Dual         Primal    Dual     Compl     Time
-   0   5.90877989e+05 -6.59095830e-01  2.96e+01 0.00e+00  1.35e+00     1s
-   1   7.40338722e+04 -1.97222285e+01  4.37e+00 2.13e-14  1.94e-01     1s
-   2   3.32737258e+03 -1.94352566e+01  1.95e-01 2.13e-14  8.72e-03     1s
-   3   3.13911573e+01 -1.84747193e+01  3.52e-04 2.84e-14  7.90e-05     1s
-   4   2.09840883e+01  5.12023732e+00  1.04e-05 2.13e-14  2.29e-05     1s
-   5   1.72854031e+01  8.62690756e+00  9.34e-07 1.42e-14  1.25e-05     1s
-   6   1.48240284e+01  9.39038741e+00  2.91e-07 1.42e-14  7.86e-06     1s
-   7   1.30056045e+01  9.46750320e+00  1.09e-07 1.42e-14  5.12e-06     1s
-   8   1.13723987e+01  9.93146785e+00  1.37e-08 2.13e-14  2.08e-06     1s
-   9   1.09996836e+01  1.01102786e+01  6.69e-09 2.84e-14  1.29e-06     1s
-  10   1.06125555e+01  1.02682474e+01  1.18e-09 2.84e-14  4.98e-07     1s
-  11   1.04970280e+01  1.03896990e+01  2.35e-10 2.13e-14  1.55e-07     1s
-  12   1.04674038e+01  1.04199735e+01  6.68e-11 2.84e-14  6.86e-08     1s
-  13   1.04620488e+01  1.04402788e+01  4.17e-11 1.42e-14  3.15e-08     1s
-  14   1.04566816e+01  1.04451903e+01  1.74e-11 1.42e-14  1.66e-08     1s
-  15   1.04542221e+01  1.04508797e+01  6.68e-12 1.78e-14  4.83e-09     1s
-  16   1.04530210e+01  1.04512090e+01  1.22e-12 1.42e-14  2.62e-09     1s
-  17   1.04526914e+01  1.04526597e+01  1.11e-14 2.13e-14  4.59e-11     1s
-  18   1.04526698e+01  1.04526644e+01  2.79e-12 2.13e-14  7.87e-12     1s
-  19   1.04526644e+01  1.04526644e+01  4.91e-15 2.13e-14  7.87e-15     2s
+   0   4.58917198e+06  0.00000000e+00  2.95e+01 0.00e+00  9.52e+00     1s
+   1   3.66773748e+05 -2.06063240e+02  3.53e+00 1.71e-13  1.08e+00     1s
+   2   1.93459547e+02 -2.05699916e+02  9.26e-04 2.84e-13  7.22e-04     1s
+   3   4.95990850e+01 -3.13367670e+01  5.95e-05 2.27e-13  1.20e-04     1s
+   4   1.84303704e+01 -5.92591619e+00  2.84e-06 3.41e-13  3.53e-05     1s
+   5   1.28258664e+01  2.60358962e+00  3.52e-07 2.27e-13  1.48e-05     1s
+   6   1.00106071e+01  5.15961460e+00  8.97e-08 1.71e-13  7.02e-06     1s
+   7   8.39135027e+00  5.53655474e+00  3.02e-08 1.14e-13  4.13e-06     1s
+   8   7.37287804e+00  5.90815789e+00  7.00e-09 1.71e-13  2.12e-06     1s
+   9   7.00020766e+00  6.06193119e+00  3.12e-09 1.71e-13  1.36e-06     1s
+  10   6.73939461e+00  6.20303702e+00  1.22e-09 1.71e-13  7.76e-07     1s
+  11   6.63849338e+00  6.30640656e+00  7.45e-10 3.41e-13  4.80e-07     1s
+  12   6.58592005e+00  6.34671900e+00  5.29e-10 2.27e-13  3.46e-07     1s
+  13   6.50502933e+00  6.40339254e+00  2.34e-10 2.27e-13  1.47e-07     1s
+  14   6.45647339e+00  6.42852509e+00  5.72e-11 1.71e-13  4.04e-08     1s
+  15   6.44453347e+00  6.43598249e+00  1.63e-11 1.71e-13  1.24e-08     2s
+  16   6.44164525e+00  6.43787706e+00  7.39e-12 1.71e-13  5.45e-09     2s
+  17   6.44036886e+00  6.43934060e+00  3.47e-12 2.27e-13  1.49e-09     2s
+  18   6.43959488e+00  6.43953477e+00  5.92e-13 2.27e-13  8.69e-11     2s
+  19   6.43958822e+00  6.43954197e+00  6.76e-12 2.27e-13  6.69e-11     2s
+  20   6.43957482e+00  6.43954529e+00  5.10e-12 1.71e-13  4.27e-11     2s
+  21   6.43955514e+00  6.43954598e+00  1.64e-11 2.27e-13  1.33e-11     2s
+  22   6.43954600e+00  6.43954599e+00  9.75e-13 1.99e-13  2.32e-14     2s
 
-Barrier solved model in 19 iterations and 1.54 seconds (2.60 work units)
-Optimal objective 1.04526644e+01
+Barrier solved model in 22 iterations and 1.82 seconds (3.17 work units)
+Optimal objective 6.43954600e+00
 
 Crossover log...
 
-   74205 DPushes remaining with DInf 0.0000000e+00                 2s
+   74082 DPushes remaining with DInf 0.0000000e+00                 2s
        0 DPushes remaining with DInf 0.0000000e+00                 2s
 
-    1620 PPushes remaining with PInf 1.1447712e-03                 2s
-       0 PPushes remaining with PInf 0.0000000e+00                 2s
+     813 PPushes remaining with PInf 1.4888130e-03                 2s
+       0 PPushes remaining with PInf 1.7659000e-04                 2s
 
-  Push phase complete: Pinf 0.0000000e+00, Dinf 9.2264359e-11      2s
+  Push phase complete: Pinf 1.7659000e-04, Dinf 6.5786873e-10      2s
 
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+   74898    6.4395460e+00   1.765900e-04   0.000000e+00      2s
 
 Solved with barrier
-Iteration    Objective       Primal Inf.    Dual Inf.      Time
-   75828    1.0452664e+01   0.000000e+00   0.000000e+00      2s
+   74901    6.4395460e+00   0.000000e+00   0.000000e+00      2s
 
-Solved in 75828 iterations and 2.04 seconds (3.65 work units)
-Optimal objective  1.045266436e+01
-Gurobi status= 2
+Solved in 74901 iterations and 2.13 seconds (3.57 work units)
+Optimal objective  6.439545988e+00
